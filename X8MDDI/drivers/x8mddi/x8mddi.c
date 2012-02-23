@@ -12,10 +12,8 @@
 
 // dx: fix mddi driver
 #define X8
-#define X10M_
-#define X10MP_
-#define DX_MODULE_NAME			"x8mddi"
-#define DX_MODULE_VER			"v001"
+#define DX_MODULE_NAME			"MIDDI X8"
+#define DX_MODULE_VER			"v002"
 
 
 // patch offsets
@@ -23,21 +21,6 @@
 #define DEVICE_NAME				"X8"
 #define OFS_KALLSYMS_LOOKUP_NAME	0xC00B0654			// kallsyms_lookup_name
 #endif
-
-#ifdef X10M
-#define DEVICE_NAME				"X10 mini"
-#define OFS_KALLSYMS_LOOKUP_NAME	0xC00AF6D8			// kallsyms_lookup_name
-#define	OFS_ESD_RECOVERY_SAMSUNG	0xC01A2A8C			// esd_recovery_func for samsung mddi
-#define	OFS_ESD_RECOVERY_HITACHI	0xC01A40B8			// esd_recovery_func for hitachi mddi
-#endif
-
-#ifdef X10MP
-#define DEVICE_NAME				"X10 mini pro"
-#define OFS_KALLSYMS_LOOKUP_NAME	0xC00B09F0			// kallsyms_lookup_name
-#define	OFS_ESD_RECOVERY_SAMSUNG	0xC01C0288			// esd_recovery_func for samsung mddi
-#define	OFS_ESD_RECOVERY_HITACHI	0xC01BEC6C			// esd_recovery_func for hitachi mddi
-#endif
-
 
 // dx: our external variables/functions
 typedef unsigned long (*kallsyms_lookup_name_type)(const char *name);
@@ -75,7 +58,7 @@ static int __init x8screen_init(void)
 	// our 'GetProcAddress' :D
 	kallsyms_lookup_name_dx = (void*) OFS_KALLSYMS_LOOKUP_NAME;
 	
-	printk(KERN_INFO DX_MODULE_NAME": module " DX_MODULE_VER " loaded. Build target : " DEVICE_NAME "\n");
+	printk(KERN_INFO DX_MODULE_NAME": module " MODULE_VER " loaded. Build target : " DEVICE_NAME "\n");
 
 #ifndef X8
 	// x10 mini / pro has two different screen: samsung/hitachi. We have to patch both
@@ -99,7 +82,7 @@ static int __init x8screen_init(void)
 }
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("doixanh at xda-developers");
-MODULE_DESCRIPTION("Fixes for laggy X8/X10m/X10mp MDDI drivers");
+MODULE_AUTHOR("Spevky");
+MODULE_DESCRIPTION("Fixes for laggy X8 MDDI drivers");
 
 module_init(x8screen_init);
